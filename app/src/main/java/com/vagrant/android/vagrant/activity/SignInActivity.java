@@ -56,7 +56,7 @@ public class SignInActivity extends AppCompatActivity {
                             startActivity(intent);
                             SignInActivity.this.finish();
                         }else {
-                            Toast.makeText(SignInActivity.this,"登录error:"+e.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignInActivity.this,"登录失败:"+e.getMessage(),Toast.LENGTH_LONG).show();
                             Log.e("Login:",e.toString());
                         }
                     }
