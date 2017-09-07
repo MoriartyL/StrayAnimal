@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="账号设置">
+        <Preference
+            android:key="preference_account"
+            android:summary="管理账号安全，修改账号密码"
+            android:title="账号与安全" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="其它">
+        <Preference
+            android:summary="@string/preference_version"
+            android:title="应用版本" />
+        <Preference
+            android:key="preference_contact"
+            android:summary="@string/preference_contact"
+            android:title="联系我们" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="开发者">
+        <Preference
+            android:key="preference_developer"
+            android:summary="@string/preference_developer"
+            android:title="Andrew Tang" />
+        <Preference
+            android:key="preference_email"
+            android:summary="@string/preference_email"
+            android:title="错误报告" />
+    </PreferenceCategory>
+</PreferenceScreen>

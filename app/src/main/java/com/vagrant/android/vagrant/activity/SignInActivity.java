@@ -24,11 +24,11 @@ import cn.bmob.v3.listener.LogInListener;
  */
 
 public class SignInActivity extends AppCompatActivity {
-    private static final String MY_ID = "2938d61a18552981c7f21bacd57b702a";
+    private static final String MY_BMOB_ID = "2938d61a18552981c7f21bacd57b702a";
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        Bmob.initialize(this, MY_ID);
+        Bmob.initialize(this, MY_BMOB_ID);
         Person bmobUser = BmobUser.getCurrentUser(Person.class);
         if(bmobUser != null){
             Intent intent = new Intent(SignInActivity.this,MainActivity.class);
@@ -37,6 +37,9 @@ public class SignInActivity extends AppCompatActivity {
         }
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_signin);
+        initView();
+    }
+    private void initView(){
         Button loginButton=(Button) findViewById(R.id.btn_login);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -61,26 +64,6 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
-//                BmobUser bu2 = new BmobUser();
-//                bu2.setUsername(username);
-//                bu2.setPassword(password);
-//                bu2.login(new SaveListener<BmobUser>() {
-//                    @Override
-//                    public void done(BmobUser bmobUser, BmobException e) {
-//                        if(e==null){
-//                            //Toast.makeText(SignInActivity.this,"登录成功:",Toast.LENGTH_LONG).show();
-//                            //toast("登录成功:");
-//                            //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
-//                            //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
-//                            Intent intent=new Intent(SignInActivity.this,MainActivity.class);
-//                            startActivity(intent);
-//                            SignInActivity.this.finish();
-//                        }else{
-//                            Toast.makeText(SignInActivity.this,"登录error:"+e.getMessage(),Toast.LENGTH_LONG).show();
-//                            Log.e("Login:",e.toString());
-//                        }
-//                    }
-//                });
             }
         });
 
@@ -93,8 +76,8 @@ public class SignInActivity extends AppCompatActivity {
                 SignInActivity.this.finish();
             }
         });
-    }
 
+    }
 
 
 }

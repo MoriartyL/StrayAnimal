@@ -49,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_face"
                 android:layout_centerHorizontal="true"
-                android:text="为什么不问问神奇海螺？"
                 android:textColor="#E0E0E0"
                 android:textSize="16sp" />
 
@@ -88,8 +87,7 @@
                         android:id="@+id/account_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Moriarty" />
+                        android:layout_gravity="center" />
                 </LinearLayout>
 
                 <View
@@ -114,8 +112,7 @@
                         android:id="@+id/account_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="594125656@qq.com" />
+                        android:layout_gravity="center" />
                 </LinearLayout>
 
                 <View
@@ -140,8 +137,7 @@
                         android:id="@+id/account_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="17662135586" />
+                        android:layout_gravity="center"/>
                 </LinearLayout>
 
                 <View
@@ -166,8 +162,7 @@
                         android:id="@+id/account_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Male" />
+                        android:layout_gravity="center" />
                 </LinearLayout>
             </LinearLayout>
 

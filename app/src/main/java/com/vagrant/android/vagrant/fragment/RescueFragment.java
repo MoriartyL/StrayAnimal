@@ -44,7 +44,7 @@ public class RescueFragment extends Fragment{
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view_rescue);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),1);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.anim_card_view));
+        recyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.anim_recycler_view));
         rescueAdapter = new RescueAdapter(rescueStationList);
         recyclerView.setAdapter(rescueAdapter);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_rescue);
@@ -74,7 +74,7 @@ public class RescueFragment extends Fragment{
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        recyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.anim_card_view));
+                        recyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.anim_recycler_view));
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

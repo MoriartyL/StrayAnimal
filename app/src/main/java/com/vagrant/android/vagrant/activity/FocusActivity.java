@@ -26,27 +26,18 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 public class FocusActivity extends AppCompatActivity {
-    private List<Pet> petList = new ArrayList<Pet>();
-    private FocusAdapter focusAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private List<Pet> mPetList = new ArrayList<Pet>();
+    private FocusAdapter mFocusAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_focus);
         final Person person = BmobUser.getCurrentUser(Person.class);
-        if ((petList.size() == 0) && person != null) {
+        if ((mPetList.size() == 0) && person != null) {
             initFocus(person);
         }
         initViews();
-//        handler = new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                Log.e("!!!!!","-----");
-//                initViews((ArrayList<Pet>)msg.obj);
-//            }
-//        };
-//        Log.e("petList1:",String.valueOf(petList.size()));
-
     }
     private void initViews(){
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -60,13 +51,13 @@ public class FocusActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler_view_focus);
         GridLayoutManager layoutManager = new GridLayoutManager(this,1);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.startAnimation(AnimationUtils.loadAnimation(this,R.anim.anim_card_view));
-        Log.e("PetList2:",String.valueOf(petList.size()));
-        focusAdapter = new FocusAdapter(petList);
-        recyclerView.setAdapter(focusAdapter);
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_focus);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorSecendary);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        recyclerView.startAnimation(AnimationUtils.loadAnimation(this,R.anim.anim_recycler_view));
+        Log.e("PetList2:",String.valueOf(mPetList.size()));
+        mFocusAdapter = new FocusAdapter(mPetList);
+        recyclerView.setAdapter(mFocusAdapter);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_focus);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorSecendary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshFoucus();
@@ -86,7 +77,7 @@ public class FocusActivity extends AppCompatActivity {
                 FocusActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
 
@@ -94,7 +85,7 @@ public class FocusActivity extends AppCompatActivity {
         }).start();
     }
     private void initFocus(Person bmobUser){
-        petList.clear();
+        mPetList.clear();
         getFocusFromBmob(bmobUser);
 
     }
@@ -109,10 +100,10 @@ public class FocusActivity extends AppCompatActivity {
                 if(e == null){
                     Log.e("查询关注成功:",String.valueOf(list.size()));
                     for (Pet pet:list){
-                        petList.add(pet);
+                        mPetList.add(pet);
                     }
-                    Log.e("PetList3",String.valueOf(petList.size()));
-                    focusAdapter.notifyDataSetChanged();
+                    Log.e("PetList3",String.valueOf(mPetList.size()));
+                    mFocusAdapter.notifyDataSetChanged();
 
                 }else {
                     Log.e("查询关注失败:",e.getMessage());

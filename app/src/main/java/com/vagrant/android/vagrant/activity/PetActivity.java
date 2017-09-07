@@ -40,9 +40,10 @@ public class PetActivity extends AppCompatActivity {
     public static final String PET_DESCRIPTION = "pet_description";
     public static final String PET_CONTACT = "pet_contact";
     public static final String PET_ID = "pet_id";
+    public static final String BLANK = "\n\b\b\b\b\b\b\b\b\b\b\b" ;
     private Boolean isFocused = false;
-    private List<String> focusId = new ArrayList<String>();
-    private FloatingActionButton  floatingActionButton;
+    private List<String> mFocusId = new ArrayList<String>();
+    private FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +53,29 @@ public class PetActivity extends AppCompatActivity {
         final Person person = BmobUser.getCurrentUser(Person.class);
 
         final String petId = intent.getStringExtra(PET_ID);
-        String petName = intent.getStringExtra(PET_NAME);
-        String petImageId = intent.getStringExtra(PET_IMAGE_ID);
-        String petBreed = intent.getStringExtra(PET_BREED);
-        String petContact = intent.getStringExtra(PET_CONTACT);
-        int petAge = intent.getIntExtra(PET_AGE, 0);
-        String petOrganization = intent.getStringExtra(PET_ORIGANIZATION);
-        String petDescription = intent.getStringExtra(PET_DESCRIPTION);
-        Boolean petGender = intent.getBooleanExtra(PET_GENDER, true);
+        final String petName = intent.getStringExtra(PET_NAME);
+        final String petImageId = intent.getStringExtra(PET_IMAGE_ID);
+        final String petBreed = intent.getStringExtra(PET_BREED);
+        final String petContact = intent.getStringExtra(PET_CONTACT);
+        final int petAge = intent.getIntExtra(PET_AGE, 0);
+        final String petOrganization = intent.getStringExtra(PET_ORIGANIZATION);
+        final String petDescription = intent.getStringExtra(PET_DESCRIPTION);
+        final Boolean petGender = intent.getBooleanExtra(PET_GENDER, true);
+        initView(person,petId,petName,petImageId,petBreed,petOrganization,petDescription,petContact,petAge,petGender);
 
+    }
+    private void initView(final Person person,final String petId,final String petName,
+                          final String petImageId,final String petBreed,final String petOrganization,
+                          final String petDescription,final String  petContact,final int petAge,final Boolean petGender){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toobar_pet);
         ImageView petImageView = (ImageView) findViewById(R.id.pet_header_image);
         TextView petContentText = (TextView) findViewById(R.id.pet_content_text);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.pet_floating_action_button);
-
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.pet_floating_action_button);
         if (person != null){
             getFocusID(person,petId);
         }
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isFocused) {
@@ -87,30 +92,30 @@ public class PetActivity extends AppCompatActivity {
         }
         collapsingToolbarLayout.setTitle(petName);
         Glide.with(this).load(petImageId).into(petImageView);
-        String petContent = petContent(petName, petBreed, petOrganization, petDescription,petContact,petAge, petGender);
+        String petContent = setPetContent(petName, petBreed, petOrganization, petDescription,petContact,petAge, petGender);
         petContentText.setText(petContent);
 
     }
     @NonNull
-    private String petContent(String petName, String petBreed, String petOrganization, String petDescription, String petContact, int petAge, Boolean petGender) {
+    private String setPetContent(String petName, String petBreed, String petOrganization, String petDescription, String petContact, int petAge, Boolean petGender) {
         StringBuilder petContent = new StringBuilder();
-        petContent.append("名字:\n\b\b\b\b\b\b\b\b\b\b\b"+petName);
+        petContent.append("名字:" + BLANK + petName);
         petContent.append("\n");
-        petContent.append("品种:\n\b\b\b\b\b\b\b\b\b\b\b"+petBreed);
+        petContent.append("品种:" + BLANK + petBreed);
         petContent.append("\n");
-        petContent.append("年龄:\n\b\b\b\b\b\b\b\b\b\b\b"+petAge);
+        petContent.append("年龄:" + BLANK +petAge);
         petContent.append("\n");
         if (petGender == true) {
-            petContent.append("性别:\n\b\b\b\b\b\b\b\b\b\b\b雄");
+            petContent.append("性别:" + BLANK + "雄");
         }else {
-            petContent.append("性别:\n\b\b\b\b\b\b\b\b\b\b\b雌");
+            petContent.append("性别:" + BLANK + "雌");
         }
         petContent.append("\n");
-        petContent.append("机构:\n\b\b\b\b\b\b\b\b\b\b\b"+petOrganization);
+        petContent.append("机构:" + BLANK + petOrganization);
         petContent.append("\n");
-        petContent.append("介绍:\n\b\b\b\b\b\b\b\b\b\b\b"+petDescription);
+        petContent.append("介绍:" + BLANK + petDescription);
         petContent.append("\n");
-        petContent.append("联系方式:\n\b\b\b\b\b\b\b\b\b\b\b"+petContact);
+        petContent.append("联系方式:" + BLANK + petContact);
         return petContent.toString();
     }
     private void addFocus(Person bmobUser,String petId){
@@ -129,8 +134,8 @@ public class PetActivity extends AppCompatActivity {
                 }
             }
         });
-        floatingActionButton.setImageResource(R.drawable.ic_turned_in_pink_500_24dp);
-        focusId.add(petId);
+        mFloatingActionButton.setImageResource(R.drawable.ic_turned_in_pink_500_24dp);
+        mFocusId.add(petId);
         isFocused = true;
 
 
@@ -151,13 +156,13 @@ public class PetActivity extends AppCompatActivity {
                 }
             }
         });
-        floatingActionButton.setImageResource(R.drawable.ic_turned_in_not_pink_500_24dp);
-        focusId.remove(petId);
+        mFloatingActionButton.setImageResource(R.drawable.ic_turned_in_not_pink_500_24dp);
+        mFocusId.remove(petId);
         isFocused = false;
 
     }
     private void getFocusID(Person bmobUser, final String petId){
-        focusId.clear();
+        mFocusId.clear();
         BmobQuery<Pet> query = new BmobQuery<Pet>();
         query.setLimit(50);
         query.addWhereRelatedTo("focusedPets",new BmobPointer(bmobUser));
@@ -168,16 +173,16 @@ public class PetActivity extends AppCompatActivity {
                 if(e == null){
                     Log.e("查询关注ID成功:",String.valueOf(list.size()));
                     for (Pet pet:list){
-                        focusId.add(pet.getObjectId());
+                        mFocusId.add(pet.getObjectId());
                     }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (focusId.contains(petId)){
+                            if (mFocusId.contains(petId)){
                                 isFocused = true;
-                                floatingActionButton.setImageResource(R.drawable.ic_turned_in_pink_500_24dp);
+                                mFloatingActionButton.setImageResource(R.drawable.ic_turned_in_pink_500_24dp);
                             }else {
-                                floatingActionButton.setImageResource(R.drawable.ic_turned_in_not_pink_500_24dp);
+                                mFloatingActionButton.setImageResource(R.drawable.ic_turned_in_not_pink_500_24dp);
                             }
                         }
                     });

@@ -39,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     //Tab 文字
-    private final int[] TAB_TITLES = new int[]{R.string.keai,R.string.jiuzhu,R.string.jiaoliu,};
+    private final int[] TAB_TITLES = new int[]{R.string.tab_title_first,R.string.tab_title_second,R.string.tab_title_third,};
     //Tab 图片
     private final int[] TAB_IMGS = new int[]{R.drawable.ic_favorite_blue_500_24dp,R.drawable.ic_home_blue_500_24dp,R.drawable.ic_question_answer_blue_500_24dp};
     //Fragment 数组
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private MyViewPagerAdapter mAdapter;
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
+    //private FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,12 +135,29 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                if (position == 0){
+//                    mFloatingActionButton.show();
+//                }else {
+//                    mFloatingActionButton.;
+//                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }
 
-    /**
-     * @description: 设置添加Tab
-     */
     private void setTabs(TabLayout tabLayout, LayoutInflater inflater, int[] tabTitlees, int[] tabImgs){
         for (int i = 0; i < tabImgs.length; i++) {
             TabLayout.Tab tab = tabLayout.newTab();
@@ -165,10 +183,10 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.signout:
-                AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("Warning")
-                        .setMessage("Are you sure to sign out?")
-                        .setNegativeButton("No",null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(getString(R.string.dialog_warning))
+                        .setMessage(getString(R.string.dialog_signout))
+                        .setNegativeButton(getString(R.string.dialog_no),null)
+                        .setPositiveButton(getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 BmobUser.logOut();
@@ -190,9 +208,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * @description: ViewPager 适配器
-     */
     private class MyViewPagerAdapter extends FragmentPagerAdapter {
         public MyViewPagerAdapter(FragmentManager fm) {
             super(fm);

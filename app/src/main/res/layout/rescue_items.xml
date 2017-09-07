@@ -36,7 +36,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="天津市博爱救助站"
                     android:textColor="#212121"
                     android:textSize="16sp" />
 
@@ -45,14 +44,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="宾水西道延长线211号"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/rescue_contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="微信:1532548666"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -88,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_check_circle_blue_500_18dp"
-            android:text="此机构已经过认证如有意愿捐赠请直接联系该机构"
+            android:text="@string/identified_description"
             android:textColor="#212121"
             android:textSize="13sp" />
     </LinearLayout>

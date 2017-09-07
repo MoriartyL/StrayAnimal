@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="594125656@qq.com"
         android:textColor="@color/white"
         android:textSize="14sp" />
 
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/nav_header_email"
         android:layout_marginBottom="10dp"
-        android:text="Dog"
         android:textColor="@color/white"
         android:textSize="14sp" />
 

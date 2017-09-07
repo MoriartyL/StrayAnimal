@@ -46,10 +46,10 @@ public class AccountActivity extends AppCompatActivity {
         TextView tvEmail = (TextView)findViewById(R.id.account_email);
         TextView tvPhone = (TextView)findViewById(R.id.account_phone);
         TextView tvGender = (TextView)findViewById(R.id.account_gender);
-        String description = "Wubba Lubba Dub Dub!";
-        String username = "Rick";
-        String email = "rick@C37.com";
-        String phone = "31415926";
+        String description = "";
+        String username = "";
+        String email = "";
+        String phone = "";
         String gender = "Male";
         BmobFile face = bmobUser.getFace();
         if(face != null){

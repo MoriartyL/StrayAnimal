@@ -44,23 +44,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ModifyActivity extends AppCompatActivity {
     private static Map preAccountInfo = new HashMap();
     public static final int CHOOSE_PHOTO = 1;
-    private CircleImageView mcircleImage;
+    private CircleImageView mCircleImage;
     private String newImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify);
-        mcircleImage = (CircleImageView)findViewById(R.id.modify_face);
-        mcircleImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(ModifyActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(ModifyActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
-                    openAlbum();
-                }
-            }
-        });
+
         Person bmobUser = BmobUser.getCurrentUser(Person.class);
         initViews();
         if (bmobUser != null) {
@@ -94,7 +84,7 @@ public class ModifyActivity extends AppCompatActivity {
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            mcircleImage.setImageBitmap(bitmap);
+            mCircleImage.setImageBitmap(bitmap);
         } else {
             Toast.makeText(this, "Failed to get image", Toast.LENGTH_SHORT).show();
         }
@@ -120,16 +110,21 @@ public class ModifyActivity extends AppCompatActivity {
     private void updateAccountInfo(){
         Person newUser = new Person();
         EditText etDescription = (EditText) findViewById(R.id.modify_description);
-        EditText etUsername = (EditText) findViewById(R.id.modify_username);
+        //EditText etUsername = (EditText) findViewById(R.id.modify_username);
         EditText etEmail = (EditText) findViewById(R.id.modify_email);
         EditText etPhone = (EditText) findViewById(R.id.modify_phone);
         RadioGroup rgGender = (RadioGroup)findViewById(R.id.modify_gender);
         RadioButton rbChecked = (RadioButton)findViewById(rgGender.getCheckedRadioButtonId());
         String description = etDescription.getText().toString();
-        String username = etUsername.getText().toString();
+        //String username = etUsername.getText().toString();
         String email = etEmail.getText().toString();
         String phone = etPhone.getText().toString();
         String gender = rbChecked.getText().toString();
+        if(gender.equals("男生")){
+            gender = "Male";
+        }else {
+            gender = "Female";
+        }
         if(preAccountInfo.containsKey("description")){
             if(!(preAccountInfo.get("description").toString().equals(description))){
                 newUser.setDescription(description);
@@ -137,13 +132,13 @@ public class ModifyActivity extends AppCompatActivity {
         }else {
             newUser.setDescription(description);
         }
-        if(preAccountInfo.containsKey("username")){
-            if (!(preAccountInfo.get("username").toString().equals(username))){
-                newUser.setUsername(username);
-            }
-        }else {
-            newUser.setUsername(username);
-        }
+//        if(preAccountInfo.containsKey("username")){
+//            if (!(preAccountInfo.get("username").toString().equals(username))){
+//                newUser.setUsername(username);
+//            }
+//        }else {
+//            newUser.setUsername(username);
+//        }
         if(preAccountInfo.containsKey("email")){
             if (!(preAccountInfo.get("email").toString().equals(email))){
                 newUser.setEmail(email);
@@ -173,13 +168,13 @@ public class ModifyActivity extends AppCompatActivity {
             @Override
             public void done(BmobException e) {
                 if(e == null){
-                    Toast.makeText(ModifyActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ModifyActivity.this,AccountActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                 }else {
-                    Toast.makeText(ModifyActivity.this, "Update Error" + e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModifyActivity.this, "更新失败" + e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -215,19 +210,22 @@ public class ModifyActivity extends AppCompatActivity {
     private void setAccountInfo(Person bmobUser) {
         CircleImageView ciFace = (CircleImageView)findViewById(R.id.modify_face);
         EditText etDescription = (EditText) findViewById(R.id.modify_description);
-        EditText etUsername = (EditText) findViewById(R.id.modify_username);
+        //EditText etUsername = (EditText) findViewById(R.id.modify_username);
         EditText etEmail = (EditText) findViewById(R.id.modify_email);
         EditText etPhone = (EditText) findViewById(R.id.modify_phone);
         //RadioGroup rgGender = (RadioGroup)findViewById(R.id.modify_gender);
         RadioButton rbMale = (RadioButton) findViewById(R.id.modify_gender_male);
         RadioButton rbFemale = (RadioButton) findViewById(R.id.modify_gender_female);
+        String  textMale = "Male";
+        if(!"男生".equals(rbMale.getText())) {
+            textMale = "Female";
+        }
 
 
         String description = "Wubba Lubba Dub Dub!";
-        String username = "Rick";
-        String email = "rick@C37.com";
-        String phone = "31415926";
-        String gender = "Male";
+        String email = "";
+        String phone = "";
+        String gender = "";
         BmobFile face = bmobUser.getFace();
         if(face != null){
             String faceUri = face.getFileUrl();
@@ -237,10 +235,10 @@ public class ModifyActivity extends AppCompatActivity {
             description = BmobUser.getObjectByKey("description").toString();
             preAccountInfo.put("description",description);
         }
-        if (BmobUser.getObjectByKey("username") != null) {
-            username = BmobUser.getObjectByKey("username").toString();
-            preAccountInfo.put("username",username);
-        }
+//        if (BmobUser.getObjectByKey("username") != null) {
+//            username = BmobUser.getObjectByKey("username").toString();
+//            preAccountInfo.put("username",username);
+//        }
         if (BmobUser.getObjectByKey("email") != null) {
             email = BmobUser.getObjectByKey("email").toString();
             preAccountInfo.put("email",email);
@@ -258,10 +256,10 @@ public class ModifyActivity extends AppCompatActivity {
             preAccountInfo.put("gender",gender);
         }
         etDescription.setText(description);
-        etUsername.setText(username);
+        //etUsername.setText(username);
         etEmail.setText(email);
         etPhone.setText(phone);
-        if (gender.equals(rbMale.getText().toString())) {
+        if (gender.equals(textMale)) {
             rbMale.setChecked(true);
         } else {
             rbFemale.setChecked(true);
@@ -279,6 +277,17 @@ public class ModifyActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
             actionBar.setDisplayShowTitleEnabled(false);
         }
+        mCircleImage = (CircleImageView)findViewById(R.id.modify_face);
+        mCircleImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(ModifyActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ModifyActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    openAlbum();
+                }
+            }
+        });
 
     }
 
@@ -327,7 +336,7 @@ public class ModifyActivity extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     openAlbum();
                 }else {
-                    Toast.makeText(this, "You denied the perimission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "您拒绝了请求", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

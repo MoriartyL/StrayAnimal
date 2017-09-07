@@ -1,6 +1,8 @@
 package com.vagrant.android.vagrant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 
 import com.vagrant.android.vagrant.R;
+import com.vagrant.android.vagrant.activity.ReportActivity;
 import com.vagrant.android.vagrant.adapter.PetAdapter;
 import com.vagrant.android.vagrant.pojo.Pet;
 
@@ -27,15 +30,39 @@ import cn.bmob.v3.listener.FindListener;
  */
 
 public class HomeFragment extends Fragment {
-    private List<Pet> petList = new ArrayList<Pet>();
-    private PetAdapter petAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerView recyclerView;
+    private List<Pet> mPetList = new ArrayList<Pet>();
+    private PetAdapter mPetAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButton;
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFloatingActionButton.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFloatingActionButton.hide();
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (mFloatingActionButton != null) {
+//            if (isVisibleToUser) {
+//                mFloatingActionButton.show();
+//            } else {
+//                mFloatingActionButton.hide();
+//            }
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        if (petList.size() == 0) {
+        if (mPetList.size() == 0) {
             initPets();
         }
         initViews(view);
@@ -43,24 +70,32 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_pets);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_pets);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.anim_card_view));
-        petAdapter = new PetAdapter(petList);
-        recyclerView.setAdapter(petAdapter);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_pets);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorSecendary);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.anim_recycler_view));
+        mPetAdapter = new PetAdapter(mPetList);
+        mRecyclerView.setAdapter(mPetAdapter);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_pets);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorSecendary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshPets();
             }
         });
+        mFloatingActionButton = (FloatingActionButton)view.findViewById(R.id.pet_floating_action_button);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initPets() {
-        petList.clear();
+        mPetList.clear();
         getPetFromBmob();
     }
 
@@ -76,9 +111,9 @@ public class HomeFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //petAdapter.notifyDataSetChanged();
-                        recyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.anim_card_view));
-                        swipeRefreshLayout.setRefreshing(false);
+                        //mPetAdapter.notifyDataSetChanged();
+                        mRecyclerView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.anim_recycler_view));
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }
@@ -95,9 +130,9 @@ public class HomeFragment extends Fragment {
                 if (e == null) {
                     Log.e("查询成功:", String.valueOf(list.size()));
                     for (Pet pet : list) {
-                        petList.add(pet);
+                        mPetList.add(pet);
                     }
-                    petAdapter.notifyDataSetChanged();
+                    mPetAdapter.notifyDataSetChanged();
                 } else {
                     Log.e("查询失败", e.getMessage());
                 }
