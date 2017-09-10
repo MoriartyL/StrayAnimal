@@ -15,16 +15,19 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <LinearLayout
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_weight="1">
 
         <RelativeLayout
+            android:id="@+id/report_image_layout"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
-            android:clickable="true">
+            android:layout_height="0dp"
+            android:clickable="true"
+            app:layout_heightPercent="25%"
+            >
 
             <ImageView
                 android:id="@+id/report_show_image"
@@ -43,8 +46,10 @@
         </RelativeLayout>
 
         <LinearLayout
+            app:layout_heightPercent="75%"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/report_image_layout"
             android:orientation="vertical"
             android:padding="12dp">
 
@@ -115,9 +120,9 @@
                 android:layout_marginTop="24dp"
                 android:background="@color/colorPrimaryDark"
                 android:padding="12dp"
-                android:text="@string/report_time"
+                android:text="@string/report_confirm"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

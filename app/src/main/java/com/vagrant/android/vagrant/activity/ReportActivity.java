@@ -81,7 +81,7 @@ public class ReportActivity extends AppCompatActivity {
                 mProgressDialog.setMessage(getString(R.string.report_loading));
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.setCancelable(true);
-                mProgressDialog.show();
+
                 uploadInformation();
             }
         });
@@ -105,6 +105,7 @@ public class ReportActivity extends AppCompatActivity {
             mAppCompatButton.setEnabled(true);
 
         }else {
+            mProgressDialog.show();
             report.setSpecies(species);
             report.setLocation(location);
             report.setDescription(description);
