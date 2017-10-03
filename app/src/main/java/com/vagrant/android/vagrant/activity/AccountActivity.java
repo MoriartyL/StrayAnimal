@@ -74,9 +74,9 @@ public class AccountActivity extends AppCompatActivity {
         }
         if(BmobUser.getObjectByKey("gender") != null){
            if("true".equals(BmobUser.getObjectByKey("gender").toString())){
-               gender = "Male";
+               gender = "男生";
            }else {
-               gender = "Female";
+               gender = "女生";
            }
         }
 

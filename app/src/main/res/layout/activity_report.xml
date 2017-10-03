@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:backgroundTint="#BDBDBD"
+                app:backgroundTint="#BDBDBD"
                 android:src="@drawable/ic_add_a_photo_white_48dp" />
         </RelativeLayout>
 

@@ -1,7 +1,7 @@
-# 流浪窝
+# 馨家
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)](https://opensource.org/licenses/MIT)
 > 
-流浪窝(StrayAnimal)是一款为流浪动物收留机构与爱心人士之间建立交流平台的公益性应用。
+馨家(StrayAnimal)是一款为流浪动物收留机构与爱心人士之间建立交流平台的公益性应用。
 ### 功能特性
 - 符合Material Design设计原则
 - 后台采用Bmob后端云
@@ -11,7 +11,7 @@
 - 爱心活动公示
 
 ### 支持Android版本
-        流浪窝 Android 支持API Level 21+ (Android > 5.0).
+        馨家 Android 支持API Level 21+ (Android > 5.0).
 ### 注意事项
 本应用全程独立开发所以难免有疏漏和缺陷，希望您能及时汇报存在的漏洞，如果有更好的设计想法我也十分乐意与您进行讨论。
 >       转载请注明出处。

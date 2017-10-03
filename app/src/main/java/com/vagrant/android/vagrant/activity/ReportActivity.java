@@ -81,7 +81,6 @@ public class ReportActivity extends AppCompatActivity {
                 mProgressDialog.setMessage(getString(R.string.report_loading));
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.setCancelable(true);
-
                 uploadInformation();
             }
         });
